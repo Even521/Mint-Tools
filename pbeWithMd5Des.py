@@ -44,25 +44,3 @@ def decrypt_pbe_with_md5_and_des(password, encrypted_text):
 
     return decrypted_text
 
-# def main():
-#     print("操作说明：\n1.加密私钥/助记词\n2.解密私钥/助记词")
-#     while True:
-#         try:
-#             action = input("请输入你的操作：")
-#             if int(action) == 1:
-#                 password = getpass.getpass("输入密码：")
-#                 plaintext = getpass.getpass("输入私钥/助记词：")
-#
-#                 # Encrypt
-#                 encrypted_text = encrypt_pbe_with_md5_and_des(password, plaintext)
-#                 print("Encrypted Text:", encrypted_text)
-#             elif int(action) == 2:
-#                 password = getpass.getpass("输入密码：")
-#                 plaintext = getpass.getpass("输入私钥/助记词：")
-#                 decrypted_text = decrypt_pbe_with_md5_and_des(password, plaintext)
-#                 print("Decrypted Text:", decrypted_text)
-#             else:
-#                 print('请输入正确的操作命令！')
-#         except Exception as e:
-#             print(f'ERROR:{e}')
-
