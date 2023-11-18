@@ -1,6 +1,6 @@
 import getpass
 from eth_account import Account
-import pbeWithMd5Des
+from common import pbeWithMd5Des
 
 def create_wallet():
     Account.enable_unaudited_hdwallet_features()
@@ -27,7 +27,7 @@ def create_pwd_wallet():
         if pbeWithMd5Des.decrypt_pbe_with_md5_and_des(pwd2, word) == str(
                 mnemonic) and pbeWithMd5Des.decrypt_pbe_with_md5_and_des(pwd2, privateKeyEnc) == str(privateKey):
             print(f'助记词：{word}\n私钥：{privateKeyEnc}\n钱包地址：{str(address)}')
-            with open('ws.txt','w') as f:
+            with open('resource/wallet.txt', 'w') as f:
                 f.write(f'助记词：{word}\n私钥：{privateKeyEnc}\n钱包地址：{str(address)}')
         else:
             print("加密异常")

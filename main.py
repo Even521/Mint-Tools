@@ -8,9 +8,8 @@
 @Date    ：2023/11/18 22:31 
 @contact :richard.eth@foxmail.com
 '''
-import pbeWithMd5Des
-import wallet
-import mintEvm20
+from common import wallet, pbeWithMd5Des
+from mint import mintEvm20
 import getpass
 
 def main():
@@ -41,7 +40,7 @@ def main():
             else:
                 print("请输入正确的指令！")
         except Exception as e:
-            print(f'ERROR:{e}')
+            print(f'ERROR111:{e}')
 
 if __name__ == '__main__':
     main()

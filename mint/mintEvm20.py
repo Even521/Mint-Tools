@@ -1,17 +1,18 @@
 import json
 from web3 import Web3
 from dotenv import load_dotenv
-import os,getpass
-load_dotenv()
-import pbeWithMd5Des
-import transferStr
+import os
+
+load_dotenv('env/.env')
+from common import transferStr, pbeWithMd5Des
 import time
 
-def mint(pwd=None):
+def mint(pwd):
     envKey=os.environ.get('account_private_key')
     delay = int(os.environ.get('delay'))
     num = os.environ.get('num')
-    private_key = pbeWithMd5Des.decrypt_pbe_with_md5_and_des(pwd,envKey)
+    print(type(pwd))
+    private_key = pbeWithMd5Des.decrypt_pbe_with_md5_and_des(pwd, envKey)
     adress = os.environ.get('account_address')
     data = json.loads(os.environ.get('data'))
     chainName = os.environ.get('chainName')
@@ -33,20 +34,21 @@ def mint(pwd=None):
     c = 0
     success = 0
     failed = 0
+    tx = {
+        'nonce': '',
+        'chainId': chain,
+        'to': adress,
+        'from': adress,
+        'data': data,  # mint 16进制数据
+        'gasPrice': web3.eth.gas_price,
+        'value': Web3.to_wei(0, 'ether')
+    }
     if num != '':
         n = 0
         while n < int(num):
             try:
                 nonce = web3.eth.get_transaction_count(adress)
-                tx = {
-                    'nonce': nonce,
-                    'chainId': chain,
-                    'to': adress,
-                    'from': adress,
-                    'data': data,  # mint 16进制数据
-                    'gasPrice': web3.eth.gas_price,
-                    'value': Web3.to_wei(0, 'ether')
-                }
+                tx['nonce'] = nonce
                 gas = web3.eth.estimate_gas(tx)
                 tx['gas'] = gas
                 print(f'交易参数：{tx}')
@@ -62,7 +64,10 @@ def mint(pwd=None):
                 else:
                     continue
             except Exception as e:
-                print(f'ERROR:{e}')
+                if str(e) == 'insufficient funds for transfer':
+                    print("余额不足！")
+                else:
+                    print(f'ERROR:{e}')
                 failed += 1
             n += 1
             time.sleep(delay)
@@ -70,15 +75,7 @@ def mint(pwd=None):
         while True:
             try:
                 nonce = web3.eth.get_transaction_count(adress)
-                tx = {
-                    'nonce': nonce,
-                    'chainId': chain,
-                    'to': adress,
-                    'from': adress,
-                    'data': data,  # mint 16进制数据
-                    'gasPrice': web3.eth.gas_price,
-                    'value': Web3.to_wei(0, 'ether')
-                }
+                tx['nonce'] = nonce
                 gas = web3.eth.estimate_gas(tx)
                 tx['gas'] = gas
                 print(tx)
@@ -94,7 +91,11 @@ def mint(pwd=None):
                 else:
                     continue
             except Exception as e:
-                print(f'ERROR:{e}')
+
+                if str(e) == 'insufficient funds for transfer':
+                    print("余额不足！")
+                else:
+                    print(f'ERROR:{e}')
                 failed += 1
             time.sleep(delay)
     print(f'成功：{success}\n失败:{failed}')
