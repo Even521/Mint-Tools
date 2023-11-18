@@ -4,30 +4,12 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv('env/.env')
-from common import transferStr, pbeWithMd5Des
+from common import  pbeWithMd5Des,loadEnv
 import time
 
 def mint(pwd):
-    envKey=os.environ.get('account_private_key')
-    delay = int(os.environ.get('delay'))
-    num = os.environ.get('num')
-    print(type(pwd))
-    private_key = pbeWithMd5Des.decrypt_pbe_with_md5_and_des(pwd, envKey)
-    adress = os.environ.get('account_address')
-    data = json.loads(os.environ.get('data'))
-    chainName = os.environ.get('chainName')
-    if chainName == 'bsc':
-        rpc = json.loads(os.environ.get('rpc_url'))['bsc']
-        chain = json.loads(os.environ.get('chain_id'))['bsc']
-    elif chainName == 'polygon':
-        rpc = json.loads(os.environ.get('rpc_url'))['polygon']
-        chain = json.loads(os.environ.get('chain_id'))['polygon']
-    print(f'RPC:{rpc}\nChainId:{chain}')
-    data = ''.join(str(data).split())
-    data = 'data:,' + data
-    print(f'原始铭文信息：{data}')
-    data = transferStr.encodeHex(data)
-    print(f'十六进制铭文信息：{data}')
+    delay, num, privateKey_env, adress, rpc, chainId,data = loadEnv.loadDate()
+    private_key = pbeWithMd5Des.decrypt_pbe_with_md5_and_des(pwd, privateKey_env)
     web3 = Web3(Web3.HTTPProvider(rpc))
     print(f'是否链接成功：{web3.is_connected()}')
     print(f'资产余额：{Web3.from_wei(web3.eth.get_balance(adress),"ether")}')
@@ -36,7 +18,7 @@ def mint(pwd):
     failed = 0
     tx = {
         'nonce': '',
-        'chainId': chain,
+        'chainId': chainId,
         'to': adress,
         'from': adress,
         'data': data,  # mint 16进制数据
@@ -91,7 +73,6 @@ def mint(pwd):
                 else:
                     continue
             except Exception as e:
-
                 if str(e) == 'insufficient funds for transfer':
                     print("余额不足！")
                 else:
