@@ -1,0 +1,4 @@
+eth_account==0.10.0
+pycryptodome==3.15.0
+python-dotenv==1.0.0
+web3==6.11.3
