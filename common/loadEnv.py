@@ -19,7 +19,7 @@ def loadDate():
     num = os.environ.get('num')
     adress = os.environ.get('account_address')
     data = json.loads(os.environ.get('data'))
-    chainName = os.environ.get('chainName')
+    chainName = os.environ.get('chain_name')
     if chainName == 'bsc':
         rpc = json.loads(os.environ.get('rpc_url'))['bsc']
         chainId = json.loads(os.environ.get('chain_id'))['bsc']

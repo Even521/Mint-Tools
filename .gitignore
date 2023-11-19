@@ -1,2 +1,5 @@
 /.idea/
+/common/__pycache__/
+/mint/__pycache__/
+/.DS_Store
 mint-tool.iml
