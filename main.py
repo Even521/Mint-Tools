@@ -27,13 +27,13 @@ def main():
                 plaintext = input("输入私钥/助记词：")
                 # Encrypt
                 encrypted_text = pbeWithMd5Des.encrypt_pbe_with_md5_and_des(password, plaintext)
-                print(f"Encrypted Text:{encrypted_text}")
+                print(f"加密后私钥/助记词:{encrypted_text}")
             elif int(action) == 3:
                 password = getpass.getpass("输入密码：")
                 plaintext = input("输入私钥/助记词：")
                 #Decrypt
                 decrypted_text = pbeWithMd5Des.decrypt_pbe_with_md5_and_des(password, plaintext)
-                print(f"Decrypted Text:{decrypted_text}",)
+                print(f"解密后私钥/助记词:{decrypted_text}",)
             elif int(action) == 4:
                 pwd = getpass.getpass("请输入你的密码:")
                 mintEvm20.mint(pwd)
