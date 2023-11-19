@@ -26,6 +26,9 @@ def loadDate():
     elif chainName == 'polygon':
         rpc = json.loads(os.environ.get('rpc_url'))['polygon']
         chainId = json.loads(os.environ.get('chain_id'))['polygon']
+    elif chainName == 'okb':
+        rpc = json.loads(os.environ.get('rpc_url'))['okb']
+        chainId = json.loads(os.environ.get('chain_id'))['okb']
     print(f'RPC:{rpc}\nChainId:{chainId}')
     data = ''.join(str(data).split())
     data = 'data:,' + data

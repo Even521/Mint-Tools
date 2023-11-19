@@ -51,7 +51,7 @@ def mint(pwd):
                 else:
                     continue
             except Exception as e:
-                if str(e) == 'insufficient funds for transfer':
+                if str(e) == 'insufficient funds':
                     print("余额不足！")
                 else:
                     print(f'ERROR:{e}')
