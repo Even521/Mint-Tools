@@ -24,13 +24,13 @@ def main():
                 wallet.create_pwd_wallet()
             elif int(action) == 2:
                 password = getpass.getpass("输入密码：")
-                plaintext = getpass.getpass("输入私钥/助记词：")
+                plaintext = input("输入私钥/助记词：")
                 # Encrypt
                 encrypted_text = pbeWithMd5Des.encrypt_pbe_with_md5_and_des(password, plaintext)
                 print(f"Encrypted Text:{encrypted_text}")
             elif int(action) == 3:
                 password = getpass.getpass("输入密码：")
-                plaintext = getpass.getpass("输入私钥/助记词：")
+                plaintext = input("输入私钥/助记词：")
                 #Decrypt
                 decrypted_text = pbeWithMd5Des.decrypt_pbe_with_md5_and_des(password, plaintext)
                 print(f"Decrypted Text:{decrypted_text}",)
