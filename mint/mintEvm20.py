@@ -76,7 +76,7 @@ def mint(pwd):
                     success += 1
                 elif receipt == -1:
                     time.sleep(3)
-                    print("~~~等待gas下降到40才铸造~~~")
+                    print(F'~~~等待gas下降到{gas_limit}才铸造~~~')
                 else:
                     continue
             except Exception as e:
